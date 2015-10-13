@@ -1,0 +1,4 @@
+UID  PID PPID F    CPU PRI NI RSS  S  ADDR    TTY TIME    CMD
+123   1  0    4000 0   31  0   568 Ss 6fd9cd4 ??  0:00.20 /sbin/launchd
+125  10  1    4000 0   31  0  1292 R+ 6fd9384 ??  0:00.59 /usr/libexec/kextd
+127  11  1    4000 0   31  0  3412 Z  6fd982c ??  0:02.10 /bin/ls
