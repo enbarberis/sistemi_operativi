@@ -1,5 +1,0 @@
-UID  PID PPID  CPU PRI NI RSS  S  ADDR     ADDR     ADDR     TIME    
-123   1  x     x   31  x   568 Ss 6fd9cd4  6fd9cd4  6fd9cd4  x:xx.2x 
-125  1x  1     x   31  x  1292 R+ 6fd9384  6fd9384  6fd9384  x:xx.59 
-125  1x  1     x   31  x  1292 R+ 6fd9384  6fd9384  6fd9384  x:xx.59 
-127  11  1     x   31  x  3412 Z  6fd982c  6fd982c  6fd982c  x:x2.1x 
