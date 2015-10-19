@@ -18,6 +18,15 @@ int  main()
 		//child process code
 		printf("I'm child process and my pid is %d\n", getpid());
 		fflush(stdout);
+		
+		sleep(5);
+		return 4;
+	}
+	else
+	{
+		//father process code
+		printf("I'm father process and my pid is %d\n", getpid());
+		fflush(stdout);
 
 		int stat_val;
 		int pid_child = wait(&stat_val);
@@ -26,25 +35,12 @@ int  main()
 			
 		if (WIFEXITED(stat_val))
 		{
-			printf("Valore restituito: %d\n", WEXITSTATUS (statVal));
+			printf("with value: %d\n", WEXITSTATUS (stat_val));
 		}
 		else
 		{
-			printf("Terminazione anormale\n");
+			printf("ABNORMAL EXIT\n");
 		}
-	}
-
-
-	}
-	else
-	{
-		//father process code
-		printf("I'm father process and my pid is %d\n", getpid());
-		fflush(stdout);
-
-		sleep(10);
-
-		return 4;
 	}
 	
 	return 0;
