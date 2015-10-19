@@ -1,11 +1,14 @@
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <dirent.h>
 #include <limits.h>
 #include <sys/types.h>
 #include <string.h>
-#include <fcntl.h>  	
+#include <fcntl.h>
+
+#define VERBOSE 1
 
 void cpr(char *src_path, char *dest_path);
 
@@ -16,6 +19,17 @@ int main(int argc, char **argv)
 		fprintf(stderr, "Parameters error!\n"
 				"Usage: ./cpr <src-dir> <dest-dir>\n");
 		return -1;
+	}
+
+	//clean path
+	if(argv[1][strlen(argv[1]) - 1] == '/')
+	{
+		argv[1][strlen(argv[1]) - 1] = '\0';
+	}
+
+	if(argv[2][strlen(argv[2]) - 1] == '/')
+	{
+		argv[2][strlen(argv[2]) - 1] = '\0';
 	}
 
 	cpr(argv[1], argv[2]);
@@ -33,7 +47,7 @@ void cpr(char *src_path, char *dest_path)
 	char full_dest_file_name[PATH_MAX + 1];
 	int fd_in;
 	int fd_out;
-	char buffer;
+	char buffer[1024];
 
 	//get info about src_path
 	if(lstat(src_path, &stat_buffer) < 0)
@@ -91,6 +105,11 @@ void cpr(char *src_path, char *dest_path)
 			else
 			{
 				//if it is a file, copy it!
+				if(VERBOSE)
+				{
+					printf("%s -> %s\n", full_src_file_name, full_dest_file_name);
+				}
+
 				fd_in = open(full_src_file_name, O_RDONLY);
 
 				if(fd_in < 0)
@@ -107,9 +126,9 @@ void cpr(char *src_path, char *dest_path)
 					exit(-8);
 				}
 
-				while(read(fd_in, &buffer, 1) > 0)
+				while(read(fd_in, &buffer, 1024) > 0)
 				{
-					write(fd_out, &buffer, 1);
+					write(fd_out, &buffer, 1024);
 				}
 
 				close(fd_in);

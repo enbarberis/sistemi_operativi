@@ -15,6 +15,7 @@ int main(int argc, char **argv)
 	}
 	else
 	{
+		//clean path
 		if(argv[1][strlen(argv[1]) - 1] == '/')
 		{
 			argv[1][strlen(argv[1]) - 1] = '\0';
