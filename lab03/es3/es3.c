@@ -5,8 +5,8 @@
 #include <sys/wait.h>
 
 void print_error(const char *msg, int exit_value);
-void P3679();
-void P2458();
+void P368();
+void P2457();
 
 int main(int argc, char **argv)
 {
@@ -23,15 +23,15 @@ int main(int argc, char **argv)
 	else if(!pid)
 	{
 		//child process
-		P3679();
+		P368();
 	}
 	else
 	{
 		//father process
-		P2458();
+		P2457();
 
 		waitpid(pid, (int *)0, 0);
-		printf("P10 - %d\n", getpid());
+		printf("P09 - %d\n", getpid());
 	}
 
         
@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 }
 
 
-void P3679()
+void P368()
 {
 	pid_t pid;
 
@@ -53,18 +53,17 @@ void P3679()
 	}
 	if(!pid)
 	{
-		printf("P07 - %d\n", getpid());
+		printf("P06 - %d\n", getpid());
 		exit(0);
 	}
 	else
 	{
-		printf("P06 - %d\n", getpid());
 		waitpid(pid, (int *)0, 0);
+		printf("P08 - %d\n", getpid());
 	}
-
-	printf("P09 - %d\n", getpid());
 }
-void P2458()
+
+void P2457()
 {
 	pid_t pid;
 
@@ -87,7 +86,7 @@ void P2458()
 		waitpid(pid, (int *)0, 0);
 	}
 
-	printf("P08 - %d\n", getpid());
+	printf("P07 - %d\n", getpid());
 
 }
 
