@@ -3,13 +3,55 @@
 #include <unistd.h>
 
 void print_error(char *msg, int exit_value);
-
 void create_children(int n);
+
+void create_children(int n)
+{
+	if(n > 0)
+	{
+		printf("[%d]I'm father, and I'm going to generate 2 children\n", getpid());
+
+		int pid1 = fork();
+		
+		if(pid1 < 0)
+		{
+			print_error("Can't fork", -1);
+		}
+		else if(!pid1)
+		{
+			//first child
+			printf("[%d -> %d]I'm first child\n", getppid(), getpid());
+			create_children(n-1);
+		}
+		else
+		{
+			//father fork
+			int pid2 = fork();
+			if(!pid2 < 0)
+			{
+				print_error("Can't fork!\n", -2);			
+			}
+			else if(!pid2)
+			{
+				printf("[%d -> %d]I'm second child\n", getppid(), getpid());
+				create_children(n-1);
+			}
+			else
+			{
+				//father dies
+				printf("[%d]I'm father and I'm dying\n", getpid());
+				exit(0);
+			}
+		}
+	}
+}
 
 int main(int argc, char **argv)
 {
 	int n;
 	int t;
+
+	setbuf(stdout, 0);
 
 	if(argc < 3)
 	{
@@ -21,58 +63,13 @@ int main(int argc, char **argv)
 
 	create_children(n);
 
-	printf("\t\t[%d->%d]I'm leaf process running\n", getppid(), getpid());
+	printf("[%d -> %d]I'm leaf process\n", getppid(), getpid());
+
 	sleep(t);
 
 	return 0;
 }
 
-
-void create_children(int n)
-{
-	int pid1;
-	int pid2;
-
-	if(n > 0)
-	{
-		pid1 = fork();
-		if(pid1 < 0)
-		{
-			print_error("Can't fork!\n", -2);
-		}
-		else if(!pid1)
-		{
-			//child
-			printf("[%d->%d]I'm going to duplicate myself\n", getppid(), getpid());
-			
-			pid2 = fork();
-
-			if(pid2 < 0)
-			{
-				print_error("Can't fork!\n", -3);
-			}
-			else if(!pid2)
-			{
-				//child of child	
-				printf("[%d->%d]I'm child of child\n", getppid(), getpid());
-				create_children(n-1);
-			}
-			else
-			{
-				//child
-				printf("[%d->%d]I'm child\n", getppid(), getpid());
-				create_children(n-1);
-			}
-		}
-		else
-		{
-			//father
-			printf("[%d->%d]I'm father and im going to die\n", getppid(), getpid());
-			exit(0);
-		}
-	}
-
-}
 
 void print_error(char *msg, int exit_value)
 {

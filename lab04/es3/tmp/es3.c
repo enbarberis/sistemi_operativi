@@ -60,7 +60,7 @@ int main(int argc, char **argv)
 				else if(!pid)
 				{
 					//only child execute the exec and then die
-					execvp(exec_parameters[0], exec_parameters);
+					execvp("PIPPO", exec_parameters);
 				}
 				else
 				{

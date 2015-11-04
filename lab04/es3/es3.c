@@ -61,6 +61,7 @@ int main(int argc, char **argv)
 				{
 					//only child execute the exec and then die
 					execvp(exec_parameters[0], exec_parameters);
+					//execvp(executable file name, argv); 
 				}
 				else
 				{
