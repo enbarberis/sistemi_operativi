@@ -3,6 +3,9 @@
 #include <signal.h>
 #include <unistd.h>
 
+static void sigusr1(int sig_num);
+static void sigusr2(int sig_num);
+
 int main(int argc, char **argv)
 {
 	int pid = fork();
@@ -15,6 +18,13 @@ int main(int argc, char **argv)
 	else if(!pid)
 	{
 		//child process
+
+		if(signal(SIGUSR1, sigusr1) == SIG_ERR)
+		{
+			fprintf(stderr, "Can't assign signal handler to SIGUSR1\n");
+			exit(2);
+		}
+
 		while(1)
 		{
 			printf("Child is waiting...\n");
@@ -27,6 +37,13 @@ int main(int argc, char **argv)
 	else
 	{
 		//father process
+
+		if(signal(SIGUSR2, sigusr2) == SIG_ERR)
+		{
+			fprintf(stderr, "Can't assign signal handler to SIGUSR2\n");
+			exit(2);
+		}
+
 		while(1)
 		{
 			sleep(2);
@@ -41,35 +58,27 @@ int main(int argc, char **argv)
 }
 
 
-/*
 static void sigusr1(int sig_num)
 {
 	if(sig_num == SIGUSR1)
 	{
-		printf("Child Woke-up (Received SIGUSR1)\n");
+		printf("Received SIGUSR1\n");
 	}
 	else
 	{
 		printf("Received wrong signal!\n");
 	}
-
-	sleep(2);
-
-
 }
+
+
 static void sigusr2(int sig_num)
 {
-	
-}
-*/
-
-/*
- 	if(signal(SIGUSR1, sigusr1) == SIG_ERR || signal(SIGUSR2, sigusr2) == SIG_ERR)
+	if(sig_num == SIGUSR2)
 	{
-		fprintf(stderr, "Can't set signal handler!\n");
-		return 1;
+		printf("Received SIGUSR2\n");
 	}
-
-	while(1);
-
- */
+	else
+	{
+		printf("Received wrong signal!\n");
+	}
+}
