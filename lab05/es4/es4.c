@@ -4,6 +4,7 @@
 #include <string.h>
 #include <signal.h>
 #include <ctype.h>
+#include <sys/wait.h>
 
 #define PID_FILE_CHILD_1 "pid_child_1.txt"
 #define PID_FILE_CHILD_2 "pid_child_2.txt"
@@ -13,8 +14,7 @@
 #define END_STR_UPPER "END"
 
 void to_upper(char *str);
-static void sigusr1(int sig_num);
-static void sigusr2(int sig_num);
+static void sigusr(int sig_num);
 
 int main(int argc, char **argv)
 {
@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 		int brother_pid;
 		char str[MAX_STR];
 
-		if(signal(SIGUSR2, sigusr2) == SIG_ERR)
+		if(signal(SIGUSR2, sigusr) == SIG_ERR)
 		{
 			fprintf(stderr, "Can't assign signal handler\n");
 			return 2;
@@ -78,7 +78,6 @@ int main(int argc, char **argv)
 			printf("String: ");
 
 			scanf("%s", str);
-			//strcpy(str, "CiAoOoOoO123");
 
 			if((fp = fopen(STRINGS_FILE, "w")) == NULL)
 			{	
@@ -95,8 +94,6 @@ int main(int argc, char **argv)
 
 			//wait brother to print uppercase str
 			pause();
-
-			printf("[C1] After pause\n");
 
 		}while(strcmp(str, END_STR) != 0);
 
@@ -116,7 +113,7 @@ int main(int argc, char **argv)
 			int brother_pid;
 			char str[MAX_STR];
 
-			if(signal(SIGUSR1, sigusr1) == SIG_ERR)
+			if(signal(SIGUSR1, sigusr) == SIG_ERR)
 			{
 				fprintf(stderr, "Can't assign signal handler\n");
 				return 5;
@@ -153,8 +150,6 @@ int main(int argc, char **argv)
 				//wait brother signal before read
 				pause();
 
-				printf("[C2] After pause\n");
-			
 				if((fp = fopen(STRINGS_FILE, "r")) == NULL)
 				{
 					fprintf(stderr, "Can't open file\n");
@@ -171,8 +166,14 @@ int main(int argc, char **argv)
 			
 			}while(strcmp(str, END_STR_UPPER) != 0);
 		}
+		else
+		{
+			//father wait child 2
+			waitpid(pid, (int *)0, 0);
+		}
+
+		waitpid(pid, (int *)0, 0);
 	}
-	
 
 	return 0;
 }
@@ -190,13 +191,7 @@ void to_upper(char *str)
 	}
 }
 
-static void sigusr1(int sig_num)
-{
-	//nothing
-}
-
-
-static void sigusr2(int sig_num)
+static void sigusr(int sig_num)
 {
 	//nothing
 }
