@@ -37,7 +37,7 @@ int main(int argc, char **argv)
 	for(i=0; i<n-1; i++)
 	{
 		//extern loop
-		for(j=0; j<n-1-i; j++)
+		for(j=n-i-2; j>0; j--)
 		{
 			//inside loop
 			pid = fork();
@@ -55,13 +55,10 @@ int main(int argc, char **argv)
 		}
 
 		//codice scambio che child esegue
-		if(j < n-1)
-		{
-			bubble_sort_swap(fd, j);
-		}
+		bubble_sort_swap(fd, j);
 
 		//only first father must survive
-		if(j > 0)		
+		if(j  < n-i-2)		
 		{
 			exit(0);
 		}
@@ -126,7 +123,6 @@ void bubble_sort_swap(int fd, int pos)
 	int num_2;
 
 	lseek(fd, sizeof(int)*pos, SEEK_SET);
-	printf("pos = %d\n", pos);
 	
 	if(!read(fd, &num_1, sizeof(int)))
 	{
@@ -140,13 +136,12 @@ void bubble_sort_swap(int fd, int pos)
 		exit(3);
 	}
 
-	//if bigger number is on the right do the swap
-	if(num_1 < num_2)
+	//if bigger number is on the left do the swap
+	if(num_1 > num_2)
 	{
-		printf("SWYPE\n");
+		//printf("SWYPE\n");
 		lseek(fd, sizeof(int)*pos, SEEK_SET);
 		write(fd, &num_2, sizeof(int));
 		write(fd, &num_1, sizeof(int));
 	}
 }
-
