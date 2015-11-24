@@ -1,5 +1,3 @@
-183658   DELL'ANNA   FRANCESCO GIUSEPPE   01OGDLM (10)   INF1T3   1      Da frequentare
-186840   BEN AYED   AMNA   01OGDLM (10)   INF1T3   1      Da frequentare
 187747   RAHMAN   NAJEEB UR   01OGDLJ (10)   TLC1T3   1      Da frequentare
 186946   MASOUDI TARAMSARI   ZAHRA   01OGDLM (10)   INF1T3   1      Da frequentare
 174826   HADDADI   RASOUL   01OGDLJ (10)   TLC1T3   1      Frequentato nel 2011/2012
@@ -9,6 +7,5 @@
 187609   JAN   MAIN MUHAMMAD FAHEEM   01OGDLM (10)   INF1T3   1      Da frequentare
 176602   JOBARTEH   MARIAMA   01OGDLM (10)   INF1T3   1      Da frequentare
 178503   NADEEM   MUHAMMAD   01OGDLJ (10)   TLC1T3   1      Frequentato nel 2011/2012
-175746   KAFAEI LOTFIE   ARASH AHMAD ALESSANDRO   01OGDLM (10)   INF1T3   1      Frequentato nel 2011/2012
 183886   UR RAHMAN   ASAD   01OGDLM (10)   INF1T3   1      Da frequentare
 187166   LI   HAIYAN   01OGDLJ (10)   TLC1T3   1      Da frequentare
