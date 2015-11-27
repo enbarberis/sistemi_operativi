@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <wait.h>
 
 int main(int argc, char **argv)
 {
@@ -57,6 +58,11 @@ int main(int argc, char **argv)
 	}
 
 	printf("\n");
+
+	if(pid > 0)
+	{
+		waitpid(pid, (int *)0, 0);
+	}
 	
 	return 0;
 }
