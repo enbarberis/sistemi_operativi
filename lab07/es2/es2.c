@@ -49,6 +49,7 @@ int main(int argc, char **argv)
 	}
 	tid = (pthread_t *) malloc(n * sizeof(pthread_t));
 
+	//generation of the n-threads
 	for(i=0; i<n; i++)
 	{
 		if(pthread_create(&tid[i], NULL, thread_sort, (void *) &parameters[i]))
