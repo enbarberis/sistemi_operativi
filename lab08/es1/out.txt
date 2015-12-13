@@ -1,0 +1,1 @@
+../../etc/fork_2/test.c:32:		int pid_child = wait(&stat_val);
