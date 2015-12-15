@@ -19,14 +19,6 @@ all_files=$(find $directory -type f)
 for f in $all_files
 do	
 	#search function and print to output_files
-	while read row
-	do
-		if echo "$row" | grep -q "$function"
-		then
-			echo "$f:$row"
-		if
-	done < $f
-
 	egrep -HIn ".*$function\(.*\).*" $f >> $output_file
 done
 
