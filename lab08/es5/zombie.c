@@ -4,16 +4,19 @@
 
 int main()
 {
-	//can't create zombie, use sleep process	
-	sleep(60);
+    sleep(10);  //sleel a bit
 
+    //then become a zombie  
 
-	/*
-	if(fork() == 0)
+	if(fork() != 0)
 	{
-		while(1);
+        //father doesn't capture child death
+		while(1)
+        {
+            sleep(1);    
+        }
 	}
-	*/
+	
 	
 	return 0;
 }

@@ -14,7 +14,7 @@ counter=0
 while [ $flag -eq 0 ]
 do
 	output=$(ps -el | grep $1 | cut -d " " -f 2)
-	#echo $output
+	echo "Status: $output"
 
 	if [ -z "$output" ]
 	then
@@ -22,14 +22,23 @@ do
 		exit
 	fi
 
-	if [ "$output" = "S" ]
-	then
-		let "counter++"
-	fi
+	#if [ "$output" = "Z" ]
+	#then
+	#	let "counter++"
+	#fi
+
+    for stat in $output
+    do
+        if [ $stat = "Z" ]
+        then
+            let "counter++"
+            echo "ci sta zombie"
+        fi
+    done
 
 	if [ "$counter" -ge 5 ]
 	then
-		echo "Sleep process"
+		echo "Zombie process for 5 times"
 		exit
 	fi
 
