@@ -1,0 +1,195 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <time.h>
+#include <wait.h>
+#define MAX_RANDOM_SLEEP 3
+
+void random_sleep(int max_sec);			//sleep for a random time
+void sem_init(int *sem);			//semaphore initialization
+void sem_signal(int *sem);			//semaphore signal
+void sem_wait(int *sem);			//semaphore wait
+
+int main(int argc, char **argv)
+{
+	int max_sec = MAX_RANDOM_SLEEP;		//max seconds to sleep random
+	int sem_CDH[2];
+	int sem_I[2];
+	int sem_EF[2];
+	int sem_G[2];
+	int pid;
+	
+	//if exist load the max random time by parameters
+	if(argc > 2)
+	{
+		sscanf(argv[1], "%d", &max_sec); 
+	}
+
+	while(1)
+	{
+		//external loop
+		pid = fork();
+		if(pid > 0)
+		{
+			//AB
+			random_sleep(max_sec);
+
+			waitpid(pid, (int *)0, 0);
+		}
+		else
+		{
+			pid = fork();
+			if(pid > 0)
+			{
+				//C
+				random_sleep(max_sec);
+
+				waitpid(pid, (int *)0, 0);
+			}
+			else
+			{
+				pid = fork();
+				if(pid > 0)
+				{
+					//DH
+					random_sleep(max_sec);
+
+					waitpid(pid, (int *)0, 0);
+				}
+				else
+				{
+					pid = fork();
+					if(pid > 0)
+					{
+						//E
+						random_sleep(max_sec);
+
+						waitpid(pid, (int *)0, 0);
+					}
+					else
+					{
+						pid = fork();
+						if(pid > 0)
+						{
+							//F
+							random_sleep(max_sec);
+
+							waitpid(pid, (int *)0, 0);
+						}
+						else
+						{
+							pid = fork();
+							if(pid > 0)
+							{
+								//G
+								random_sleep(max_sec);
+
+								waitpid(pid, (int *)0, 0);
+							}
+							else
+							{
+								//I
+								random_sleep(max_sec);	
+							}
+						}
+					}
+				}
+			}
+		}
+
+		
+	}
+
+
+	return 0;
+}
+
+void sem_init(int *sem)
+{
+	if(pipe(sem) == -1)
+	{
+		fprintf(stderr, "Can't create semaphore!\n");
+		exit(1);
+	}
+}
+
+void sem_signal(int *sem)
+{
+	char signal = 'K';
+	
+	if(write(sem[1], &signal, sizeof(char)) != 1)
+	{
+		fprintf(stderr, "Can't send signal!\n");
+		exit(2);
+	}
+}
+
+void sem_wait(int *sem)
+{
+	char signal;
+
+	if(read(sem[0], &signal, sizeof(char)) != 1)
+	{
+		fprintf(stderr, "Failed wait!\n");
+		exit(3);
+	}
+}
+
+void random_sleep(int max_sec)
+{
+	int sec;
+	
+	//generate random number
+	srand(time(NULL));
+	sec = (rand() % (max_sec + 1));
+
+	//sleep for sec seconds
+	sleep(sec);
+}
+
+
+	/*
+	sem_init(sem);
+	pid = fork();
+	if(pid == 0)
+	{
+		//child
+		printf("child\n");
+		random_sleep(max_sec);
+		sem_signal(sem);
+	}
+	else if (pid > 0)
+	{
+		//father
+		sem_wait(sem);
+		printf("father\n");
+		random_sleep(max_sec);
+	}
+	*/
+
+/*
+ 	if(fork() > 0)
+		{
+			//PROCESS A-B
+			printf("A\n");
+
+			random_sleep(max_sec);
+			
+			sem_signal(sem_CDH);
+			sem_signal(sem_CDH);
+
+			random_sleep(max_sec);
+			
+			printf("B\n");
+			
+			random_sleep(max_sec);
+
+			sem_signal(sem_I);
+		}
+		else
+		{
+			
+		}
+
+
+ */
