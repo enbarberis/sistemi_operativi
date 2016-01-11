@@ -1,0 +1,120 @@
+Laurea in Ingegneria Informatica
+Corso di Sistemi Operativi
+Esercizi proposti per il laboratorio
+ 
+Esercitazione di laboratorio numero 11
+(pseudo prova d'esame)
+--------------------------------------
+
+Esercizio 01
+------------
+
+Implementare con le primitive semaforiche il prologo
+e l’epilogo di 4 funzioni A, B, C e D in modo che i
+processi che le chiamano rispettino la seguente path
+expression:
+
+path ( A+B; {C}; D ) end
+
+Il significato di questa path expression e' che un insieme
+di processi puo'
+* chiamare la funzione A *oppure* la funzione B in mutua
+  esclusione (quindi un processo attende se la funzione e'
+  utilizzata da un altro processo)
+* poi puo' chiamare la funzione C (che puo' essere eseguita
+  in concorrenza da tutti i processi)
+* infine puo' chiamare la funzione D.
+
+Se ad esempio la prima tra tutte le funzioni chiamate e' la
+funzione D, il processo che l’ha chiamata sara' bloccato finche'
+altri processi non avranno chiamato A oppure B e poi C.
+La path expression e' ciclica, cioe' quando è stata eseguita
+la funzione D, possono di nuovo essere eseguite, senza attesa,
+le funzioni A oppure B etc. 
+
+Suggerimento
+------------
+
+Fare riferimento alla soluzione dei Readers & Writers,
+della mutua esclusione e della sincronizzazione pura
+inizializzando opportunamente i semafori.
+
+
+
+Esercizio 02
+------------
+
+Illustrare le caratteristiche, le differenze e l'uso tipico
+delle system call fork, execve e system.
+
+
+
+Esercizio 03
+------------
+
+Con riferimento alla prevenzione del deadlock mediante l'uso
+gerarchico delle risorse, si descrivano la tecnica e si dimostri
+che non puo' condurre al deadlock.
+
+
+
+Esercizio 04
+------------
+
+Realizzare uno script bash che riceva due parametri:
+* il nome di un utente del sistema
+* il nome di un direttorio.
+Lo script deve riconoscere tutti i file dell'utente specificato
+che si trovano nel direttorio indicato e che contengono (almeno)
+una riga che comincia con la stringa
+"***Da modificare"
+In tali file occorre:
+* cancellare tale riga
+* appendere al nome del file stesso la stringa "_mod".
+
+Si controlli il corretto passaggio dei parametri.
+
+
+
+Esercizio 05
+------------
+
+Un file memorizza l'orario dei treni.
+Ogni riga del file ha il seguente formato:
+
+stazionePartenza stazioneArrivo oraPartenza oraArrivo
+
+in cui
+* il nome delle stazioni e' indicato mediante una stringa
+  senza spazi
+* le ore di partenza e di arrivo sono indicate nel formato
+  h:m, dove
+  * h e' un intero compreso tra 7 e 21 
+  * m e un intero tra 0 e 59.
+
+Realizzare uno script AWK che prenda in input un file di tale
+formato e produca in output un file che abbia lo stesso
+formato ma in cui ogni numero intero sia sempre composto da due
+cifre, ovvero nel caso il numero non sia di due cifre nel file
+di input, lo script deve aggiungere uno 0 prima della cifra
+singola (9:56 deve diventare 09:56; 8:4 deve diventare 08:04, etc.).
+
+
+
+Esercizio 06
+------------
+
+Siano dati i seguenti processi, con il relativo tempo di arrivo
+e la relativa durata:
+
+P1 0 11
+P2 2  9
+P3 4  7
+P4 6  5
+P5 8  3
+
+Si rappresentino i diagrammi di Gantt e si calcolino i tempi medi
+di attesa applicando gli algoritmi FCFS, SJF e SRTF.
+
+
+
