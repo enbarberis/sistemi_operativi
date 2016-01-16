@@ -1,0 +1,17 @@
+FCFS (First come first served)
+
+11111111111222222222333333344444888
+
+T = (0 + (11 - 2) + (20 - 4) + (27 - 6) + (32 - 8)) / 5 = 13.6
+
+
+
+SJF (shortest job first)
+
+11111111111555444443333333222222222
+
+T = (0 + (11-8) + (14-6) + (19-4) + (26-2))/5 = 10
+
+SRTF(shortest remaining time first)
+prelazione inutile in quanto viene eseguito sempre processo con 
+burst time minore come in SJF

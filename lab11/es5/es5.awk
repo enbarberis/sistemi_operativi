@@ -8,25 +8,30 @@ BEGIN{
 		exit 1
 	}
 
+	out_file = ARGV[2];
+
 	while((getline < ARGV[1]))
 	{
+		printf("%s %s ", $1, $2) > out_file;
+
 		split($3, partenza, ":");
 		split($4, arrivo, ":");
 
-		printf("'%s' %d\n\n", partenza[2], length(partenza[2]));
 
 		if(length(partenza[1]) < 2)
-			partenza[1] = "0" partenza[1];
+			printf("0") > out_file;
+		printf("%s:", partenza[1]) > out_file;
+
 		if(length(paretenza[2]) < 2)
-			partenza[2] = "0" partenza[2];
+			printf("0") > out_file;
+		printf("%s ", partenza[2]) > out_file;
 	
 		if(length(arrivo[1]) < 2)
-			arrivo[1] = "0" arrivo[1];
+			printf("0") > out_file;
+		printf("%s:", arrivo[1]) > out_file;
+
 		if(length(arrivo[2]) < 2)
-			arrivo[2] = "0" arrivo[2];
-
-
-	
-		printf("%s %s %s:%s %s:%s\n", $1, $2, partenza[1], partenza[2], arrivo[1], arrivo[2]) > ARGV[2];
+			printf("0") > out_file;
+		printf("%s\n", arrivo[2]) > out_file;
 	}
 }

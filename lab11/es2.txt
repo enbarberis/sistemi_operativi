@@ -1,0 +1,41 @@
+/*======FORK======*\
+
+  La system call fork permette la dupiclazione di un processo. 
+  Il processo chiamante viene duplicato in un altro processo creando
+  un nuovo PCB (process control box) che condivide lo stesso codice
+  sorgente oltre allo stack e all' heap. Nei sistemi operativi moderni 
+  stack e heap vengono duplicati solo se strettamente necessario, 
+  ovverso se viene modificata una variabile.
+  I due processi continuano l'esecuzione dalla riga di codice successiva
+  alla fork.
+  Il prototipo e`  int fork();
+  ritorna tre dversi tipi di valori:
+  	1) -1 in caso di errore
+	2) 0 nel caso il processo sia il figlio
+	3) >0 nel caso sia il processo padre (questo numero indica
+	il PID del figlio)
+  La fork viene chiamata una volta ma ritorna due valori (uno al padre e
+  uno al figlio)
+
+/*======EXECVE=====*\
+
+La system call sostuisce l'immagine di un processo con un altro specificato.
+Questo avviene modificando il PCB del processo chiamante con quello desiderato.
+Il nuvo processo parte dal main.
+La exec viene chiamta e se non avvengono errori non c'e` nessun valore di
+ritorno. In caso di errore viene ritornato -1.
+In particolare la execve riceve la lista dei parametri tramite un vettore
+di stringhe terminato dalla costante NULL. Inoltre non utilizza le variabili
+d'ambiente attuali ma vengono specificate manualmente tramite parametro.
+
+
+/*======SYSTEM======*\
+
+La system call system esegue un comando in foreground.
+Il prototipo e` il seguente:
+
+int system(char *cmd);
+
+ritorna il valore di ritorno del comando.
+In caso di errore ritorna -1;
+

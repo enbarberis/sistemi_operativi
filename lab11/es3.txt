@@ -1,0 +1,29 @@
+Per prevenire il deadlock si puo` agire nel seguente modo.
+Data una funzione F che definisce l'ordine gerarchico di una risorsa
+
+es:
+	F(HD) = 9
+	F(DVD) = 6
+	F(STAMPANTE) = 3
+
+un P/T puo` accedere ad una nuiva risorsa se e solo:
+
+	F(NEW) > F(OLD)
+
+Cosi` facendo non puo` crearsi una condizione di deadlock.
+
+Dimostrazione:
+
+F(Rk) < F(Rk+1) 	per ogni risorsa k-esima
+
+F(R0) < F(R1) < .... < F(Rn)
+
+Supponendo che siano in attesa circolare (Deadlcok)
+
+Rn -> P0 -> R1 -> P1 -> R2 ....
+
+Non potra` mai capitare in quanto vorrebbe dire che:
+
+F(R0) < F(R1) < .... < F(Rn) < F(R0)
+
+in pratica F(Rn) non puo` richiedere R0 in quanto F(Rn) < F(R0)

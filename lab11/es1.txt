@@ -1,0 +1,62 @@
+/**********************************************************
+ 
+  Dopo aver eseguito {A | B} posso iniziare ad eseguire
+  piu` funzioni C in concorrenza (non e` necessaria la 
+  mutua esclusione tra le funzioni C).
+  Non appena l'ultima funzione C termina puo` essere
+  eseguita la funzione D
+
+**********************************************************/
+
+
+//VARIABILI & INIZIALIZZAZIONE
+
+init(AB,    1);		//per garantire mutua esclusione tra {A | B}
+init(C,     0);		//per far partire le funzioni C
+init(D,     0);		//per aspettare la terminazione delle funz. D
+init(ME_NC, 1);		//per garantire la mut. escl. sulla variabile nC
+
+int nC = 0;		//quanti funzioni C sono in esecuzione
+
+
+void A()
+{
+	wait(AB);
+	printf("A\n");
+	signal(C);
+}
+
+void B()
+{
+	wait(AB);
+	printf("B\n");
+	signal(C);
+}
+
+void C()
+{
+	wait(ME_NC);
+	nC++;
+	if(nC == 1)		//se sono primo C aspetto {A | B}
+	{
+		wait(C);
+	}
+	signal(ME_NC);
+
+	printf("C\n");
+
+	wait(ME_NC);
+	nC--;
+	if(nC == 0)		//se sono ultimo C possO far partire D
+	{
+		signal(D);
+	}
+	signal(ME_NC);
+}
+
+void D()
+{
+	wait(D);
+	printf("D\n");
+	signal(AB);
+}
