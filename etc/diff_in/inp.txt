@@ -1,0 +1,12 @@
+file     con 
+
+		parole 
+			separate 
+			
+			
+			non
+			
+			
+		solo
+
+da 	spazi
